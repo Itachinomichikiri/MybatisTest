@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.swift.mappers.StudentInf">
+<insert id="Insert">
+	insert into students(name,account,age) values(#{name},#{account},#{age})
+</insert>
+
+<resultMap type="com.swift.beans.Student" id="result">
+<result property="name" column="name"></result>
+<result property="account" column="account"/>
+<result property="age" column="age"/>
+</resultMap>
+
+<select id="SelectByAccount" resultType="com.swift.beans.Student">
+select * from students where account = #{account1}
+</select>
+
+<select id="SelectByAge" resultMap="result" parameterType="integer">
+select * from students where age>#{ages}
+</select>
+
+<select id="SelectLimit" resultMap="result" parameterType="integer">
+select * from students limit #{0},#{1}
+</select>
+
+<select id="SelectLike" resultMap="result">
+select * from students 
+<where >
+	<bind name="param" value="'%'+ 'swift'+'%'"/>	
+	name like #{param}
+</where>
+</select>
+
+</mapper>
